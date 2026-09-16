@@ -35,15 +35,37 @@ const socials = [
   },
 ];
 
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Arthur Sirjacobs",
+  jobTitle: "Houdini FX Artist",
+  url: "https://arthursirjacobs.com",
+  image: "https://arthursirjacobs.com/avatar3.webp",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Vancouver",
+    addressRegion: "BC",
+    addressCountry: "CA",
+  },
+  sameAs: [...socials, ...links].map((entry) => entry.href),
+};
+
 export default function Home() {
   return (
     <div className="relative flex flex-col flex-1 items-center justify-center overflow-hidden bg-black font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
       <div className="pointer-events-none absolute top-0 left-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/20 blur-3xl" />
 
       <main className="relative flex w-full max-w-sm flex-col items-center gap-9 px-6 py-24">
         <div className="flex flex-col items-center gap-4 text-center">
           <Image
-            src="/avatar.jpg"
+            src="/avatar3.webp"
             alt="Arthur Sirjacobs"
             width={132}
             height={132}

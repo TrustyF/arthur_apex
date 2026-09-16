@@ -12,9 +12,40 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = "https://arthursirjacobs.com";
+const title = "Arthur Sirjacobs — Houdini FX Artist";
+const description =
+  "Arthur Sirjacobs is a Houdini FX Artist based in Vancouver, BC, Canada. Find his reviews, portfolio, and tools.";
+
 export const metadata: Metadata = {
-  title: "Arthur Sirjacobs",
-  description: "Links to my work",
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
+  authors: [{ name: "Arthur Sirjacobs", url: siteUrl }],
+  creator: "Arthur Sirjacobs",
+  alternates: {
+    canonical: siteUrl,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    type: "profile",
+    firstName: "Arthur",
+    lastName: "Sirjacobs",
+    title,
+    description,
+    url: siteUrl,
+    siteName: "Arthur Sirjacobs",
+    images: [{ url: "/avatar3.webp", width: 512, height: 512 }],
+  },
+  twitter: {
+    card: "summary",
+    title,
+    description,
+    images: ["/avatar3.webp"],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
