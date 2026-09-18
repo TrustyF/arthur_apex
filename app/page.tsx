@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Clapperboard, Palette,Wrench } from "lucide-react";
 import identity from "../public/identity.json";
 
 const links = [
@@ -7,19 +6,22 @@ const links = [
     label: "Arthur's Corner",
     description: "Movie opinions",
     href: "https://review.arthursirjacobs.com/",
-    icon: Clapperboard,
+    icon: "/site_icons/review_icon.webp",
+    color: "#ff860d",
   },
   {
     label: "Portfolio",
     description: "My art & work",
     href: "https://arthur-sirjacobs.art/",
-    icon: Palette,
+    icon: "/site_icons/portfolio_favicon.ico",
+    color: "#22c55e",
   },
   {
     label: "Houdini Icons",
     description: "Find icons easily",
     href: "https://houdini-icons.dev/",
-    icon: Wrench,
+    icon: "/site_icons/houdini_favicon.ico",
+    color: "#fa4816",
   },
 ];
 
@@ -113,10 +115,15 @@ export default function Home() {
             <a
               key={link.href}
               href={link.href}
-              className="group flex w-full items-center justify-between rounded-2xl border border-white/[.145] px-5 py-4 transition-colors hover:border-accent/40 hover:bg-accent/[.08]"
+              style={{ "--link-color": link.color } as React.CSSProperties}
+              className="group flex w-full items-center justify-between rounded-2xl border border-white/[.145] px-5 py-4 transition-colors hover:border-[color:var(--link-color)]/40 hover:bg-[color:var(--link-color)]/[.08]"
             >
-              <span className="flex items-center gap-3 text-left">
-                <link.icon className="h-5 w-5 shrink-0 text-accent" />
+              <span className="flex items-center gap-5 text-left">
+                <img
+                  src={link.icon}
+                  alt=""
+                  className="h-8 w-8 shrink-0 object-cover"
+                />
                 <span className="flex flex-col">
                   <span className="text-base font-medium text-zinc-50">
                     {link.label}
@@ -127,7 +134,7 @@ export default function Home() {
                 </span>
               </span>
               <svg
-                className="h-4 w-4 shrink-0 -translate-x-1 text-accent opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
+                className="h-4 w-4 shrink-0 -translate-x-1 text-[color:var(--link-color)] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
                 viewBox="0 0 20 20"
                 fill="none"
                 stroke="currentColor"
