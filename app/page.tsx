@@ -1,4 +1,5 @@
 import Image from "next/image";
+import identity from "../public/identity.json";
 
 const links = [
   {
@@ -35,20 +36,21 @@ const socials = [
   },
 ];
 
+// identity.json (public/, also served at /identity.json for other sites to
+// fetch) is the single source of truth for this Person entity — see
+// review.arthursirjacobs.com's layout.tsx, which fetches it instead of
+// duplicating these fields.
 const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: "Arthur Sirjacobs",
+  ...identity,
   jobTitle: "Houdini FX Artist",
-  url: "https://arthursirjacobs.com",
-  image: "https://arthursirjacobs.com/avatar3.webp",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Vancouver",
     addressRegion: "BC",
     addressCountry: "CA",
   },
-  sameAs: [...socials, ...links].map((entry) => entry.href),
 };
 
 export default function Home() {
