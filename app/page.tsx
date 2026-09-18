@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Clapperboard, Palette,Wrench } from "lucide-react";
 import identity from "../public/identity.json";
 
 const links = [
@@ -6,16 +7,19 @@ const links = [
     label: "Arthur's Corner",
     description: "Movie opinions",
     href: "https://review.arthursirjacobs.com/",
+    icon: Clapperboard,
   },
   {
     label: "Portfolio",
     description: "My art & work",
     href: "https://arthur-sirjacobs.art/",
+    icon: Palette,
   },
   {
     label: "Houdini Icons",
-    description: "Tools for Houdini",
+    description: "Find icons easily",
     href: "https://houdini-icons.dev/",
+    icon: Wrench,
   },
 ];
 
@@ -55,7 +59,7 @@ const personJsonLd = {
 
 export default function Home() {
   return (
-    <div className="relative flex flex-col flex-1 items-center justify-center overflow-hidden bg-black font-sans">
+    <div className="relative flex flex-1 flex-col overflow-hidden bg-black font-sans">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -64,7 +68,7 @@ export default function Home() {
       />
       <div className="pointer-events-none absolute top-0 left-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/20 blur-3xl" />
 
-      <main className="relative flex w-full max-w-sm flex-col items-center gap-9 px-6 py-24">
+      <main className="relative mx-auto flex w-full max-w-sm flex-1 flex-col items-center gap-9 px-6 py-16">
         <div className="flex flex-col items-center gap-4 text-center">
           <Image
             src="/avatar3.webp"
@@ -102,25 +106,6 @@ export default function Home() {
               Vancouver BC, Canada
             </p>
           </div>
-
-          <div className="flex items-center gap-3">
-            {socials.map((social) => (
-              <a
-                key={social.href}
-                href={social.href}
-                aria-label={social.label}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/[.145] text-zinc-400 transition-colors hover:border-accent/40 hover:text-accent"
-              >
-                <svg
-                  className="h-4 w-4"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  {social.icon}
-                </svg>
-              </a>
-            ))}
-          </div>
         </div>
 
         <div className="flex w-full flex-col gap-3">
@@ -130,12 +115,15 @@ export default function Home() {
               href={link.href}
               className="group flex w-full items-center justify-between rounded-2xl border border-white/[.145] px-5 py-4 transition-colors hover:border-accent/40 hover:bg-accent/[.08]"
             >
-              <span className="flex flex-col text-left">
-                <span className="text-base font-medium text-zinc-50">
-                  {link.label}
-                </span>
-                <span className="text-sm text-zinc-400">
-                  {link.description}
+              <span className="flex items-center gap-3 text-left">
+                <link.icon className="h-5 w-5 shrink-0 text-accent" />
+                <span className="flex flex-col">
+                  <span className="text-base font-medium text-zinc-50">
+                    {link.label}
+                  </span>
+                  <span className="text-sm text-zinc-400">
+                    {link.description}
+                  </span>
                 </span>
               </span>
               <svg
@@ -148,6 +136,25 @@ export default function Home() {
                 strokeLinejoin="round"
               >
                 <path d="M7 4l6 6-6 6" />
+              </svg>
+            </a>
+          ))}
+        </div>
+
+        <div className="mt-auto flex items-center gap-3">
+          {socials.map((social) => (
+            <a
+              key={social.href}
+              href={social.href}
+              aria-label={social.label}
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/[.145] text-zinc-400 transition-colors hover:border-accent/40 hover:text-accent"
+            >
+              <svg
+                className="h-4 w-4"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                {social.icon}
               </svg>
             </a>
           ))}
