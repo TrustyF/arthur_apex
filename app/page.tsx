@@ -3,18 +3,18 @@ import identity from "../public/identity.json";
 
 const links = [
   {
-    label: "Arthur's Corner",
-    description: "Movie opinions",
-    href: "https://review.arthursirjacobs.com/",
-    icon: "/site_icons/review_icon.webp",
-    color: "#ff860d",
-  },
-  {
     label: "Portfolio",
     description: "My art & work",
     href: "https://arthur-sirjacobs.art/",
     icon: "/site_icons/portfolio_favicon.ico",
     color: "#22c55e",
+  },
+  {
+    label: "Arthur's Corner",
+    description: "Movie opinions",
+    href: "https://review.arthursirjacobs.com/",
+    icon: "/site_icons/review_icon.webp",
+    color: "#ff860d",
   },
   {
     label: "Houdini Icons",
@@ -50,13 +50,6 @@ const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   ...identity,
-  jobTitle: "Houdini FX Artist",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Vancouver",
-    addressRegion: "BC",
-    addressCountry: "CA",
-  },
 };
 
 export default function Home() {

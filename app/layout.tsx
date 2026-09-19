@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://arthursirjacobs.com";
+const siteUrl = "https://arthursirjacobs.com/";
 const title = "Arthur Sirjacobs — Houdini FX Artist";
 const description =
   "Arthur Sirjacobs is a Houdini FX Artist based in Vancouver, BC, Canada. Find his reviews, portfolio, and tools.";
