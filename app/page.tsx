@@ -107,6 +107,11 @@ export default function Home() {
               Vancouver BC, Canada
             </p>
           </div>
+          <p className="text-sm leading-relaxed text-pretty text-zinc-400">
+            Senior FX Artist at Atomic Cartoons, Vancouver. Houdini
+            destruction, pyro and fluids for LEGO Star Wars and LEGO Marvel,
+            plus Python pipeline tools. Previously FX at UFX Studios in Belgium.
+          </p>
         </div>
 
         <div className="flex w-full flex-col gap-3">
