@@ -15,6 +15,30 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Entrance animations. Stagger with an inline `animation-delay`.
+   Content only fades (no movement or scaling): animated elements are drawn
+   on a GPU layer, and moving/scaling them makes text and images look soft
+   mid-animation, then snap sharp at the end. glow-in is blurred anyway, so
+   it can scale; it uses the `scale` property so it composes with Tailwind's
+   translate utilities. */
+@theme {
+  --animate-fade-in: fade-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-glow-in: glow-in 1.6s ease-out both;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes glow-in {
+    from {
+      opacity: 0;
+      scale: 0.6;
+    }
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
