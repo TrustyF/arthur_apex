@@ -45,11 +45,17 @@ const socials = [
 // identity.json (public/, also served at /identity.json for other sites to
 // fetch) is the single source of truth for this Person entity — see
 // review.arthursirjacobs.com's layout.tsx, which fetches it instead of
-// duplicating these fields.
-const personJsonLd = {
+// duplicating these fields. Wrapped in ProfilePage because Google only treats
+// Person as a rich result when it's the mainEntity of a ProfilePage.
+const profilePageJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  ...identity,
+  "@type": "ProfilePage",
+  "@id": "https://arthursirjacobs.com/#profilepage",
+  url: identity.url,
+  mainEntity: {
+    "@type": "Person",
+    ...identity,
+  },
 };
 
 export default function Home() {
@@ -58,7 +64,7 @@ export default function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
+          __html: JSON.stringify(profilePageJsonLd).replace(/</g, "\\u003c"),
         }}
       />
       <div className="pointer-events-none absolute top-0 left-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/20 blur-3xl" />
