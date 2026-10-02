@@ -1,4 +1,5 @@
 import Image from "next/image";
+import {BriefcaseBusiness, GraduationCap, Languages, MapPin} from "lucide-react";
 import identity from "../public/identity.json";
 
 const links = [
@@ -60,6 +61,25 @@ const profilePageJsonLd = {
     },
 };
 
+const languageNames = new Intl.DisplayNames(["en"], {type: "language"});
+
+// Pulled from identity.json so the visible bio and the JSON-LD can't drift.
+const facts = [
+    {label: "Employed at", value: identity.worksFor.name, detail: identity.jobTitle, Icon: BriefcaseBusiness},
+    {label: "Education", value: identity.alumniOf.name, detail: "Belgium", Icon: GraduationCap},
+    {
+        label: "Based in",
+        value: `${identity.address.addressLocality}, ${identity.address.addressRegion}`,
+        detail: "Canada",
+        Icon: MapPin,
+    },
+    {
+        label: "Languages",
+        value: identity.knowsLanguage.map((code) => languageNames.of(code)).join(", "),
+        Icon: Languages,
+    },
+];
+
 export default function Home() {
     return (
         <div className="relative flex flex-1 flex-col overflow-hidden bg-black font-sans">
@@ -72,7 +92,7 @@ export default function Home() {
             <div
                 className="pointer-events-none absolute top-0 left-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/20 blur-3xl motion-safe:animate-glow-in"/>
 
-            <main className="relative mx-auto flex w-full max-w-sm flex-1 flex-col items-center gap-9 px-6 py-16">
+            <main className="relative mx-auto flex min-h-svh w-full max-w-sm flex-col items-center gap-9 px-6 py-16">
                 <div className="flex flex-col items-center gap-4 text-center">
                     <Image
                         src="/avatar3.webp"
@@ -155,25 +175,82 @@ export default function Home() {
                     ))}
                 </div>
 
-                <div className="mt-auto flex items-center gap-3 motion-safe:animate-fade-in [animation-delay:280ms]">
-                    {socials.map((social) => (
-                        <a
-                            key={social.href}
-                            href={social.href}
-                            aria-label={social.label}
-                            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/[.145] text-zinc-400 transition-colors hover:border-accent/40 hover:text-accent"
-                        >
-                            <svg
-                                className="h-4 w-4"
-                                viewBox="0 0 24 24"
-                                fill="currentColor"
+                <footer
+                    className="mt-auto flex flex-col items-center gap-5 text-center motion-safe:animate-fade-in [animation-delay:280ms]">
+                    <div className="flex items-center gap-3">
+                        {socials.map((social) => (
+                            <a
+                                key={social.href}
+                                href={social.href}
+                                aria-label={social.label}
+                                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/[.145] text-zinc-400 transition-colors hover:border-accent/40 hover:text-accent"
                             >
-                                {social.icon}
-                            </svg>
-                        </a>
-                    ))}
-                </div>
+                                <svg
+                                    className="h-4 w-4"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                >
+                                    {social.icon}
+                                </svg>
+                            </a>
+                        ))}
+                    </div>
+                </footer>
             </main>
+
+            <section
+                id="about"
+                aria-labelledby="about-heading"
+                className="relative mx-auto flex w-full max-w-xl flex-col gap-10 px-6 pt-8 pb-[25svh]"
+            >
+                <div className="flex flex-col gap-4">
+                    <div className="flex items-center gap-4">
+                        <h2 id="about-heading"
+                            className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
+                            About
+                        </h2>
+                        <span className="h-px flex-1 bg-linear-to-r from-white/[.145] to-transparent"/>
+                    </div>
+                    <p className="text-base leading-relaxed text-zinc-300">
+                        I&apos;m Arthur Sirjacobs, a Houdini FX artist at Atomic Cartoons specializing in
+                        simulations and procedural setups. I enjoy creating Python tooling and developing pipelines. I
+                        studied at Digital Arts &amp; Entertainment in Belgium.
+                    </p>
+                </div>
+
+                <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    {facts.map(({label, value, detail, Icon}) => (
+                        <div
+                            key={label}
+                            className="flex items-start gap-4 py-2"
+                        >
+                            <span
+                                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/[.06] text-accent">
+                                <Icon className="h-4 w-4" strokeWidth={1.75} aria-hidden/>
+                            </span>
+                            <div className="flex min-w-0 flex-col gap-0.5">
+                                <dt className="text-xs text-zinc-500">{label}</dt>
+                                <dd className="text-sm font-medium text-zinc-50">{value}</dd>
+                                {detail && <dd className="text-sm text-zinc-400">{detail}</dd>}
+                            </div>
+                        </div>
+                    ))}
+                </dl>
+
+                <div className="flex flex-col gap-3">
+                    <h3 className="text-xs text-zinc-500">Skills</h3>
+                    <ul className="flex flex-wrap gap-2">
+                        {identity.knowsAbout.map((skill) => (
+                            <li
+                                key={skill}
+                                className="rounded-full border border-white/[.145] px-3 py-1 text-sm text-zinc-300"
+                            >
+                                {skill}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </section>
         </div>
     );
 }
