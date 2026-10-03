@@ -76,6 +76,8 @@ function Row({label, Icon, children}: { label: string; Icon: typeof BriefcaseIco
 }
 
 const linkClass = "transition-colors hover:text-accent";
+// Links into the portfolio take its green instead of the orange accent.
+const portfolioLinkClass = "transition-colors hover:text-portfolio";
 
 function Logo({src}: { src: string }) {
     return (
@@ -235,7 +237,7 @@ export default function Home() {
                                         className="ml-5 flex flex-col gap-2 border-l border-white/[.12] py-1 pl-[35px]">
                                         {job.credits.map((c) => (
                                             <li key={c.href} className="flex items-baseline justify-between gap-4">
-                                                <a href={c.href} className={`text-stone-200 ${linkClass}`}>{c.title}</a>
+                                                <a href={c.href} className={`text-[15px] text-stone-200 ${portfolioLinkClass}`}>{c.title}</a>
                                                 <span className="shrink-0 text-sm text-stone-500">{c.type}</span>
                                             </li>
                                         ))}
@@ -292,8 +294,9 @@ export default function Home() {
                     </figcaption>
                 </figure>
 
-                <a href={portfolioUrl} className={`w-fit text-foreground ${linkClass}`}>
-                    More work and full CV on my portfolio →
+                <a href={portfolioUrl} className={`w-fit text-foreground ${portfolioLinkClass}`}>
+                    More work and full CV on my portfolio{" "}
+                    <span aria-hidden className="text-portfolio">→</span>
                 </a>
             </div>
         </div>
