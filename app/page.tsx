@@ -1,6 +1,7 @@
 import Image from "next/image";
-import {BriefcaseBusiness, GraduationCap, Languages, MapPin} from "lucide-react";
+import {AcademicCapIcon, BriefcaseIcon, LanguageIcon, SparklesIcon} from "@heroicons/react/24/solid";
 import identity from "../public/identity.json";
+import {education, experience, languages, portfolioUrl, recommendation, skills} from "./cv";
 
 const links = [
     {
@@ -61,28 +62,36 @@ const profilePageJsonLd = {
     },
 };
 
-const languageNames = new Intl.DisplayNames(["en"], {type: "language"});
-
 // Pulled from identity.json so the visible bio and the JSON-LD can't drift.
-const facts = [
-    {label: "Employed at", value: identity.worksFor.name, detail: identity.jobTitle, Icon: BriefcaseBusiness},
-    {label: "Education", value: identity.alumniOf.name, detail: "Belgium", Icon: GraduationCap},
-    {
-        label: "Based in",
-        value: `${identity.address.addressLocality}, ${identity.address.addressRegion}`,
-        detail: "Canada",
-        Icon: MapPin,
-    },
-    {
-        label: "Languages",
-        value: identity.knowsLanguage.map((code) => languageNames.of(code)).join(", "),
-        Icon: Languages,
-    },
-];
+function Row({label, Icon, children}: { label: string; Icon: typeof BriefcaseIcon; children: React.ReactNode }) {
+    return (
+        <div className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-[9.5rem_1fr]">
+            <h2 className="flex h-6 items-center gap-2 text-xs font-medium uppercase tracking-[0.15em] text-accent">
+                <Icon className="h-4 w-4 shrink-0" aria-hidden/>
+                {label}
+            </h2>
+            <div className="min-w-0">{children}</div>
+        </div>
+    );
+}
+
+const linkClass = "transition-colors hover:text-accent";
+
+function Logo({src}: { src: string }) {
+    return (
+        <Image
+            src={src}
+            alt=""
+            width={40}
+            height={40}
+            className="h-10 w-10 shrink-0 rounded-lg object-cover ring-1 ring-white/[.08]"
+        />
+    );
+}
 
 export default function Home() {
     return (
-        <div className="relative flex flex-1 flex-col overflow-hidden bg-black font-sans">
+        <div className="relative flex flex-1 flex-col overflow-hidden bg-background font-sans">
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
@@ -109,10 +118,10 @@ export default function Home() {
                                 Arthur Sirjacobs
                             </h1>
                             <p className="text-sm text-zinc-400">
-                                Houdini FX Artist
+                                {identity.jobTitle}
                             </p>
                         </div>
-                        <p className="flex items-center justify-center gap-1 text-sm text-zinc-500">
+                        <p className="flex items-center justify-center gap-1 text-sm text-stone-400">
                             <svg
                                 className="h-3.5 w-3.5 shrink-0"
                                 viewBox="0 0 20 20"
@@ -198,59 +207,95 @@ export default function Home() {
                 </footer>
             </main>
 
-            <section
-                id="about"
-                aria-labelledby="about-heading"
-                className="relative mx-auto flex w-full max-w-xl flex-col gap-10 px-6 pt-8 pb-[25svh]"
-            >
-                <div className="flex flex-col gap-4">
+            <div id="about" className="relative mx-auto flex w-full max-w-2xl flex-col gap-14 px-6 pt-8 pb-[25svh] text-base text-stone-400">
+                <p className="text-lg leading-relaxed text-foreground">
+                    I&apos;m Arthur Sirjacobs, a senior FX artist at Atomic Cartoons specializing in
+                    Houdini simulations and procedural setups. I enjoy creating Python tooling and developing pipelines. I
+                    studied at Digital Arts &amp; Entertainment in Belgium.
+                </p>
+
+                <Row label="Experience" Icon={BriefcaseIcon}>
+                    <ol className="flex flex-col gap-9">
+                        {experience.map((job) => (
+                            <li key={job.company} className="flex flex-col gap-3">
+                                <div className="flex items-center gap-4">
+                                    <Logo src={job.logo}/>
+                                    <div className="flex min-w-0 flex-1 flex-col">
+                                        <div className="flex items-baseline justify-between gap-4">
+                                            <h3 className="font-medium text-foreground">
+                                                <a href={job.companyUrl} className={linkClass}>{job.company}</a>
+                                            </h3>
+                                            <span className="shrink-0 text-sm tabular-nums text-stone-400">{job.period}</span>
+                                        </div>
+                                        <p className="text-sm">{job.role}</p>
+                                    </div>
+                                </div>
+                                {job.credits.length > 0 && (
+                                    <ul aria-label={`Projects at ${job.company}`}
+                                        className="ml-5 flex flex-col gap-2 border-l border-white/[.12] py-1 pl-[35px]">
+                                        {job.credits.map((c) => (
+                                            <li key={c.href} className="flex items-baseline justify-between gap-4">
+                                                <a href={c.href} className={`text-stone-200 ${linkClass}`}>{c.title}</a>
+                                                <span className="shrink-0 text-sm text-stone-500">{c.type}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </li>
+                        ))}
+                    </ol>
+                </Row>
+
+                <Row label="Education" Icon={AcademicCapIcon}>
                     <div className="flex items-center gap-4">
-                        <h2 id="about-heading"
-                            className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
-                            About
-                        </h2>
-                        <span className="h-px flex-1 bg-linear-to-r from-white/[.145] to-transparent"/>
-                    </div>
-                    <p className="text-base leading-relaxed text-zinc-300">
-                        I&apos;m Arthur Sirjacobs, a Houdini FX artist at Atomic Cartoons specializing in
-                        simulations and procedural setups. I enjoy creating Python tooling and developing pipelines. I
-                        studied at Digital Arts &amp; Entertainment in Belgium.
-                    </p>
-                </div>
-
-                <dl className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    {facts.map(({label, value, detail, Icon}) => (
-                        <div
-                            key={label}
-                            className="flex items-start gap-4 py-2"
-                        >
-                            <span
-                                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/[.06] text-accent">
-                                <Icon className="h-4 w-4" strokeWidth={1.75} aria-hidden/>
-                            </span>
-                            <div className="flex min-w-0 flex-col gap-0.5">
-                                <dt className="text-xs text-zinc-500">{label}</dt>
-                                <dd className="text-sm font-medium text-zinc-50">{value}</dd>
-                                {detail && <dd className="text-sm text-zinc-400">{detail}</dd>}
+                        <Logo src={education.logo}/>
+                        <div className="flex min-w-0 flex-1 flex-col">
+                            <div className="flex items-baseline justify-between gap-4">
+                                <a href={education.url} className={`w-fit font-medium text-foreground ${linkClass}`}>
+                                    {education.school}
+                                </a>
+                                <span className="shrink-0 text-sm tabular-nums text-stone-400">{education.period}</span>
                             </div>
+                            <span className="text-sm">{education.degree}</span>
                         </div>
-                    ))}
-                </dl>
+                    </div>
+                </Row>
 
-                <div className="flex flex-col gap-3">
-                    <h3 className="text-xs text-zinc-500">Skills</h3>
+                <Row label="Skills" Icon={SparklesIcon}>
                     <ul className="flex flex-wrap gap-2">
-                        {identity.knowsAbout.map((skill) => (
+                        {[...skills.specialized, ...skills.other].map((skill, i) => (
                             <li
-                                key={skill}
-                                className="rounded-full border border-white/[.145] px-3 py-1 text-sm text-zinc-300"
+                                key={skill.name}
+                                className={`flex items-center gap-2 rounded-xl border py-1 pr-3 pl-2 text-sm ${
+                                    i < skills.specialized.length
+                                        ? "border-white/20 bg-white/[.06] text-foreground"
+                                        : "border-white/[.1]"
+                                }`}
                             >
-                                {skill}
+                                <Image src={skill.icon} alt="" width={18} height={18} className="h-[18px] w-[18px] object-contain"/>
+                                {skill.name}
                             </li>
                         ))}
                     </ul>
-                </div>
-            </section>
+                </Row>
+
+                <Row label="Languages" Icon={LanguageIcon}>
+                    <p className="text-foreground">{languages}</p>
+                </Row>
+
+                <figure className="flex flex-col gap-3 border-l border-accent/50 pl-5">
+                    <blockquote className="text-lg leading-relaxed text-foreground">
+                        &ldquo;{recommendation.quote}&rdquo;
+                    </blockquote>
+                    <figcaption className="text-sm">
+                        {recommendation.name}, {recommendation.title}
+                    </figcaption>
+                </figure>
+
+                <a href={portfolioUrl} className={`w-fit text-foreground ${linkClass}`}>
+                    More work and full CV on my portfolio →
+                </a>
+            </div>
         </div>
     );
 }

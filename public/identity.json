@@ -22,10 +22,26 @@
   },
   "knowsAbout": [
     "Houdini",
+    "Python",
+    "After Effects",
+    "Photoshop",
     "Visual effects",
     "FX simulation",
     "Procedural generation",
-    "Python"
+    "Blender",
+    "Maya",
+    "3ds Max",
+    "Creative Cloud",
+    "SynthEyes",
+    "Nuke",
+    "Marvelous Designer",
+    "ZBrush",
+    "Gaffer",
+    "Cinema 4D",
+    "Git",
+    "Vue.js",
+    "JavaScript",
+    "MySQL"
   ],
   "knowsLanguage": ["fr", "en", "nl"],
   "sameAs": [

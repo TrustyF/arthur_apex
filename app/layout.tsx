@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 const siteUrl = "https://arthursirjacobs.com/";
-const title = "Arthur Sirjacobs — Houdini FX Artist";
+const title = "Arthur Sirjacobs — Senior FX Artist";
 const description =
-  "Arthur Sirjacobs is a Houdini FX Artist based in Vancouver, BC, Canada. Find his reviews, portfolio, and tools.";
+  "Arthur Sirjacobs is a Senior FX Artist at Atomic Cartoons in Vancouver, BC, specializing in Houdini simulations. Find his portfolio, reviews, and tools.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
